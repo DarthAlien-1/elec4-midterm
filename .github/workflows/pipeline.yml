@@ -1,6 +1,5 @@
 name: Midterm Image Pipeline
 
-# Trigger: Run this every time you push code or images
 on: [push]
 
 jobs:
@@ -8,30 +7,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # 1. Download your code
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # 2. Install Python
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.10'
 
-    # 3. Install OpenCV and PyTest
     - name: Install libraries
       run: |
         pip install -r requirements.txt
 
-    # 4. Run the "Food Critic" (Test)
     - name: Run Test
       run: pytest test_process.py
 
-    # 5. Run the "Cook" (Processor)
     - name: Run Image Processor
       run: python processor.py
 
-    # 6. Save the finished meal (Upload results)
     - name: Upload Processed Images
       uses: actions/upload-artifact@v4
       with:
