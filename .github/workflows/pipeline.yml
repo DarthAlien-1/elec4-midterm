@@ -1,32 +1,51 @@
-name: Midterm Image Pipeline
+name: Auto-Commit Image Pipeline
 
-on: [push]
+# Trigger on push to main branch
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'input_images/**'    # Run when images are added
+      - 'processor.py'       # Run when code changes
+
+permissions:
+  contents: write            # Explicitly allow writing back to repo
 
 jobs:
-  build-and-process:
+  process-and-commit:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout Code
       uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }} # Use the permission token
 
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.10'
 
-    - name: Install libraries
+    - name: Install Dependencies
       run: |
-        pip install -r requirements.txt
-
-    - name: Run Test
-      run: pytest test_process.py
+        pip install opencv-python-headless numpy
 
     - name: Run Image Processor
       run: python processor.py
 
-    - name: Upload Processed Images
-      uses: actions/upload-artifact@v4
-      with:
-        name: finished-images
-        path: output_images/
+    - name: Commit and Push Changes
+      run: |
+        # 1. Configure git user (required for commits)
+        git config --global user.name "GitHub Action"
+        git config --global user.email "action@github.com"
+        
+        # 2. Add the output directory
+        git add output_images/
+        
+        # 3. Commit only if there are changes
+        # The '|| exit 0' prevents the pipeline from failing if nothing changed
+        git commit -m "Auto-processed images by DevOps Pipeline" || exit 0
+        
+        # 4. Push back to the repository
+        git push
