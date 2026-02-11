@@ -68,25 +68,18 @@ Rotates images 90 degrees in the clockwise direction.
 
 ## How to Use the Automated Image Processing System
 
-### 1. Installation
-```bash
-git clone https://github.com/DarthAlien-1/elec4-midterm.git
-cd elec4-midterm
-pip install -r requirements.txt
-```
-
-### 2. Upload/Input Images
+### 1. Upload/Input Images
 - Place the image or images you want to process inside the `input_images` folder.  
 - Supported image formats include `.jpg`, `.png`, and `.jpeg`.
 
-### 3. Program Start
+### 2. Program Start
 - Run the processor script:
 ```bash
 python processor.py
 ```
 - The system automatically processes all images found in the `input_images` folder.
 
-### 4. Automated Processing
+### 3. Automated Processing
 Each input image undergoes the following operations:
 - Thermal Vision (Heatmap)  
 - Motion Blur (Directional)  
@@ -95,17 +88,17 @@ Each input image undergoes the following operations:
 - Solarize  
 - Rotate 90° Clockwise
 
-### 5. Output Results
+### 4 . Output Results
 - All processed images are automatically saved in the `output_images` folder.  
 - Each image processing feature generates its own output file with a descriptive prefix for easy comparison and validation.
 
-### 6. Testing
-- Run automated tests using PyTest:
-```bash
-pytest test_process.py
-```
+### 5. Automation and Continuous Integration
+- Automated tests are executed using PyTest.  
+- Every push or pull request triggers the GitHub Actions CI pipeline to ensure code quality and reliability.
 
----
-
-## Author
-DarthAlien-1
+## Team Members
+- ** Jose Fernando B. Clemente - Project Lead **
+- ** Justine Edward P. Moral - DevOps Engineer **
+- ** Jerome B. Dasico - DevOps Security **
+- ** Amberdawn E. Ocillos - Tester **
+- ** Francis Kian A. Quinto - Presenter/ README **
